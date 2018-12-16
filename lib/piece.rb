@@ -1,3 +1,5 @@
+require './lib/board.rb'
+
 class Piece
   attr_reader :board
   attr_accessor :x, :y

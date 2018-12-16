@@ -1,4 +1,5 @@
-Rspec.describe Piece do
+require './lib/piece.rb'
+RSpec.describe Piece do
   describe "#legal_move?" do
     it "returns false if move outside range of board" do
       piece = Piece.new(2,2,Board.new(8))

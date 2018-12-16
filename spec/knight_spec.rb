@@ -1,4 +1,6 @@
-Rspec.describe Knight do
+require './lib/knight.rb'
+
+RSpec.describe Knight do
   describe "#legal_move?" do
     it "returns true if legal move" do
       knight = Knight.new(2,2)
