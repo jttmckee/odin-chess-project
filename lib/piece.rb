@@ -2,10 +2,15 @@ require './lib/board.rb'
 
 
 class Piece
-  attr_reader :board
+  attr_reader :board, :colour
   attr_accessor :x, :y
-  def initialize(x,y,board)
-    @x=x;@y=y;@board=board
+  def initialize(x,y,colour,board)
+    @x=x;@y=y
+    @board=board
+  end
+
+  def colour=(colour)
+    
   end
 
   def legal_move?(new_x,new_y)

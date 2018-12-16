@@ -1,4 +1,4 @@
-RSpec.shared_examples "core Piece" do
+RSpec.shared_examples "move in range" do
   context "false when outside of board range" do
     it  "(-x)" do
       expect(subject.legal_move?(-1,1)).to be false
@@ -14,4 +14,17 @@ RSpec.shared_examples "core Piece" do
     end
   end
 
+end
+
+RSpec.shared_examples "set colour" do
+  context "allows colour to be set to" do
+    it "white" do
+      subject.colour = :white
+      expect(subject.colour).to be :white
+    end
+    it "black" do
+      subject.colour = :black
+      expect(subject.colour).to be :black
+    end
+  end
 end
