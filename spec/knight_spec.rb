@@ -1,19 +1,22 @@
 require './lib/knight.rb'
 
+require './spec/support/shared_examples/piece_core.rb'
+
+
 RSpec.describe Knight do
   describe "#legal_move?" do
+    subject(:knight){ Knight.new(2,2,Board.new(8)) }
     it "returns true if legal move" do
-      knight = Knight.new(2,2,Board.new(8))
-      expect(knight.legal_move?(3,5)).to eql(true)
+      expect(knight.legal_move?(3,5)).to be true
     end
-    it "returns false if not permitted Knight move" do
-      knight = Knight.new(1,1,Board.new(8))
-      expect(knight.legal_move?(3,5)).to eql(false)
+    it "returns false if not permitted Knight move(y)" do
+      expect(knight.legal_move?(3,6)).to be false
+    end
+    it "returns false if not permitted Knight move(x)" do
+      expect(knight.legal_move?(8,5)).to be false
     end
     #check inheriting from piece
-    it "returns false if outside of range of board" do
-
-    end
+    include_examples "core Piece"
 
   end
 end
