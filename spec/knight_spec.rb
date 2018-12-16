@@ -1,7 +1,5 @@
 require './lib/knight.rb'
 
-require './spec/support/shared_examples/piece_core.rb'
-
 
 RSpec.describe Knight do
   describe "#legal_move?" do
