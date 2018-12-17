@@ -8,6 +8,7 @@ class Piece
     @x=x;@y=y
     @board=board
     self.colour = colour
+    @board.new_piece = self
   end
 
   def colour=(colour)
@@ -19,6 +20,7 @@ class Piece
   end
 
   def legal_move?(new_x,new_y)
-    @board.in_range?(new_x,new_y)
+    @board.in_range?(new_x,new_y) &&
+    (@board[new_x,new_y]&.colour != self.colour)
   end
 end

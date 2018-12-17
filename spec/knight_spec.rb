@@ -14,7 +14,7 @@ RSpec.describe Knight do
       expect(knight.legal_move?(:h,5)).to be false
     end
     #check inheriting from piece
-    let(:new_piece) {new_piece = Piece.new(:c,5,:white,subject.board) }
+    let(:new_piece) {new_piece = Piece.new(:c,5,:black,subject.board) }
     include_examples "allowed move"
   end
 
