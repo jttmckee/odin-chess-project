@@ -1,16 +1,16 @@
 RSpec.shared_examples "allowed move" do
   context "false when outside of board range" do
-    it  "(-x)" do
-      expect(subject.legal_move?(-1,1)).to be false
+    it  "(x=z)" do
+      expect(subject.legal_move?(:z,1)).to be false
     end
     it "(-y)" do
-      expect(subject.legal_move?(1,-1)).to be false
+      expect(subject.legal_move?(:a,-1)).to be false
     end
-    it "(x=100)" do
-     expect(subject.legal_move?(100,1)).to be false
+    it "(x=m)" do
+     expect(subject.legal_move?(:m,1)).to be false
     end
     it "(y=100)" do
-      expect(subject.legal_move?(1,100)).to be false
+      expect(subject.legal_move?(:a,100)).to be false
     end
   end
 
