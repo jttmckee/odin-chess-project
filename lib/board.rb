@@ -3,4 +3,7 @@ class Board
   def initialize(range)
     @range = range
   end
+  def new_piece=(piece)
+
+  end
 end

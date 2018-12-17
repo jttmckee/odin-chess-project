@@ -1,4 +1,4 @@
-RSpec.shared_examples "move in range" do
+RSpec.shared_examples "allowed move" do
   context "false when outside of board range" do
     it  "(-x)" do
       expect(subject.legal_move?(-1,1)).to be false
@@ -13,6 +13,13 @@ RSpec.shared_examples "move in range" do
       expect(subject.legal_move?(1,100)).to be false
     end
   end
+
+  context "doesn't allow move if" do
+    it "piece of same colour occupies space" do
+      expect(subject.legal_move?(new_piece.x,new_piece.y)).to be false
+    end
+  end
+
 
 end
 
