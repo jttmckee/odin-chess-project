@@ -27,4 +27,10 @@ RSpec.shared_examples "set colour" do
       expect(subject.colour).to be :black
     end
   end
+  it "raises error with another colour" do
+
+    expect{ subject.colour = :red }.
+    to raise_error "Colour can only be set to white or black"
+
+  end
 end

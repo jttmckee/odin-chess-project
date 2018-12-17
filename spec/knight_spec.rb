@@ -2,8 +2,8 @@ require './lib/knight.rb'
 
 
 RSpec.describe Knight do
+  subject(:knight){ Knight.new(2,2,:black,Board.new(8)) }
   describe "#legal_move?" do
-    subject(:knight){ Knight.new(2,2,:black,Board.new(8)) }
     it "returns true if legal move" do
       expect(knight.legal_move?(3,5)).to be true
     end
@@ -15,6 +15,9 @@ RSpec.describe Knight do
     end
     #check inheriting from piece
     include_examples "move in range"
-
   end
+
+  subject(:knight){ Knight.new(2,2,:black,Board.new(8)) }
+  include_examples "set colour"
+
 end
