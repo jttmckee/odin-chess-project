@@ -19,6 +19,6 @@ class Piece
   end
 
   def legal_move?(new_x,new_y)
-    new_x > 0 && new_x <= @board.range && new_y > 0 and new_y <= @board.range
+    @board.in_range?(new_x,new_y)
   end
 end

@@ -2,21 +2,34 @@ class Board
   attr_reader :range
   def initialize(range)
     @range = range
+    @grid = Hash.new
   end
+
   def new_piece=(piece)
-    unless piece.x > 0 and piece.y > 0 and piece.x <= @range and piece.y <= @range
+    unless in_range?(piece.x,piece.y)
       return false
     else
-      @grid[piece.x,piece.y] = piece
+      @grid[[piece.x,piece.y]] = piece
       return true
     end
   end
+
   def [](x,y)
-    unless x > 0 and y > 0 and x <= @range and y <= @range
+    unless in_range?(x,y)
       return nil
     else
-      return @grid[x,y]
+      return @grid[[x,y]]
     end
+  end
+
+  def in_range? (x,y)
+    x.class == Symbol && (:a..:h).to_a.include?(x) &&
+    y.class == Integer && (1..8).to_a.include?(y)
+  end
+
+#Class helpers
+  def self.sym_to_i(x)
+    x.to_s.ord - 96
   end
 
 end
