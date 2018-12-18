@@ -8,7 +8,7 @@ class Piece
     @x=x;@y=y
     @board=board
     self.colour = colour
-    @board.new_piece = self
+    @board.new_piece  self
   end
 
   def colour=(colour)

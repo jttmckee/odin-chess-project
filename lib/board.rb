@@ -5,8 +5,9 @@ class Board
     @grid = Hash.new
   end
 
-  def new_piece=(piece)
-    unless in_range?(piece.x,piece.y)
+  def new_piece(piece)
+    unless in_range?(piece.x,piece.y) &&
+      (self[piece.x,piece.y] == nil)
       return false
     else
       @grid[[piece.x,piece.y]] = piece
