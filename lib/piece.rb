@@ -5,6 +5,9 @@ class Piece
   attr_reader :board, :colour
   attr_accessor :x, :y
   def initialize(x,y,colour,board)
+    unless board[x,y] == nil
+       raise "Error - there is already a piece at location #{x},#{y}"
+    end
     @x=x;@y=y
     @board=board
     self.colour = colour

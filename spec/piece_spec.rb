@@ -7,6 +7,7 @@ RSpec.describe Piece, shared: true do
   end
 
   include_examples "set colour"
+  include_examples "#new"
 
 
 end
