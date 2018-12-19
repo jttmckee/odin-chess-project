@@ -56,5 +56,22 @@ RSpec.describe "Board" do
 
   end
 
+  describe "#move" do
+    let(:piece) {Piece.new(:a,3,:white,board)}
+    it "throws an error if the move is illegal" do
+      expect{board.move(piece,:a,9)}.to raise_error "Illegal move"
+    end
+
+    it "moves the piece to the new location" do
+      board.move(piece,:b,4)
+      expect(board[:b,4]).to eq piece
+    end
+
+    it "'takes' the old piece at new location" do
+      old_piece = Piece.new(:c,5,:black,board)
+      board.move(piece,:c,5)
+      expect(board.taken).to include old_piece
+    end
+  end
 
 end

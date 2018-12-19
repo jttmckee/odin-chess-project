@@ -1,8 +1,9 @@
 class Board
-  attr_reader :range
+  attr_reader :range, :taken
   def initialize(range)
     @range = range
     @grid = Hash.new
+    @taken = Array.new
   end
 
   def new_piece(piece)
@@ -26,6 +27,16 @@ class Board
   def in_range? (x,y)
     x.class == Symbol && (:a..:h).to_a.include?(x) &&
     y.class == Integer && (1..8).to_a.include?(y)
+  end
+
+  def move(piece,new_x,new_y)
+    unless piece.legal_move? new_x, new_y
+      raise "Illegal move"
+    end
+    @taken.push(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
+    @grid[[new_x,new_y]] = piece
+    piece.x = new_x;piece.y = new_y
+
   end
 
 #Class helpers
