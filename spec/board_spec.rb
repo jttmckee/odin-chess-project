@@ -29,26 +29,26 @@ RSpec.describe "Board" do
     context "returns nil if outside range as" do
       it  "x greater than h" do
         board.new_piece  Piece.new(:i,7,:white,board)
-        expect(board[9,7]).to be_nil
+        expect(board[:i,7]).to be_nil
       end
       it  "y greater than 8" do
-        board.new_piece  Piece.new(7,9,:white,board)
+        board.new_piece  Piece.new(:g,9,:white,board)
         expect(board[:g,9]).to be_nil
       end
       it  " x is a number" do
-        board.new_piece  Piece.new(-1,2,:white,board)
+        board.new_piece  Piece.new(-1,:b,:white,board)
         expect(board[1,2]).to be_nil
       end
       it  " y is a symbol" do
-        board.new_piece  Piece.new(-1,2,:white,board)
+        board.new_piece  Piece.new(-1,:b,:white,board)
         expect(board[:b,:a]).to be_nil
       end
       it  " y less than 1" do
-        board.new_piece  Piece.new(1,-2,:white,board)
+        board.new_piece  Piece.new(:a,-2,:white,board)
         expect(board[:a,-2]).to be_nil
       end
       it  "y equals zero" do
-        board.new_piece  Piece.new(0,0,:white,board)
+        board.new_piece  Piece.new(:z,0,:white,board)
         expect(board[:a,0]).to be_nil
       end
     end

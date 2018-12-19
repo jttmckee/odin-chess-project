@@ -26,4 +26,5 @@ class Piece
     @board.in_range?(new_x,new_y) &&
     (@board[new_x,new_y]&.colour != self.colour)
   end
+
 end
