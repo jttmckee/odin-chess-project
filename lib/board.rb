@@ -3,7 +3,7 @@ class Board
   def initialize(range)
     @range = range
     @grid = Hash.new
-    @taken = Array.new
+    @taken = Set.new
   end
 
   def new_piece(piece)
@@ -33,7 +33,7 @@ class Board
     unless piece.legal_move? new_x, new_y
       raise "Illegal move"
     end
-    @taken.push(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
+    @taken.add(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
     @grid[[new_x,new_y]] = piece
     piece.x = new_x;piece.y = new_y
 
