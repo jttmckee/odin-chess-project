@@ -44,4 +44,9 @@ class Board
     x.to_s.ord - 96
   end
 
+  def self.diff(x,new_x,y,new_y)
+    diff_x = (sym_to_i(new_x) - sym_to_i(x)).abs
+    diff_y = (new_y - y).abs
+    return diff_x, diff_y
+  end
 end
