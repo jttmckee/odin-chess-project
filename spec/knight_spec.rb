@@ -21,4 +21,6 @@ RSpec.describe Knight do
   subject(:knight){ Knight.new(:b,2,:black,Board.new(8)) }
   include_examples "set colour"
 
+  include_examples "#new"
+
 end

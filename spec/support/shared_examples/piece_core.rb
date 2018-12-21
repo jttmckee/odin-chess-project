@@ -43,7 +43,7 @@ RSpec.shared_examples "set colour" do
 end
 
 RSpec.shared_examples "#new" do
-  context "raises error if" do
+  context "raises error if for new piece" do
     it "there is already a piece at location" do
       expect {subject.class.new(subject.x,subject.y,:white,subject.board)}.
       to raise_error "Error - there is already a piece at location #{subject.x},#{subject.y}"
