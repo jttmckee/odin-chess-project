@@ -1,6 +1,6 @@
 class Board
   attr_reader :range, :taken
-  def initialize(range)
+  def initialize(range=8)
     @range = range
     @grid = Hash.new
     @taken = Set.new

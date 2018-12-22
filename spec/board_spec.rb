@@ -2,10 +2,10 @@
 #DRY up range by using default values
 require './lib/board.rb'
 RSpec.describe "Board" do
-  subject(:board) {Board.new(8)}
+  subject(:board) {Board.new}
   describe "#new_piece" do
     it "creates a new piece" do
-      expect(board.new_piece Piece.new(:a,1,:white,Board.new(8))).to be true
+      expect(board.new_piece Piece.new(:a,1,:white,Board.new)).to be true
     end
     #Test removed as covered by the new piece test
     # it "fails if a piece is already there" do

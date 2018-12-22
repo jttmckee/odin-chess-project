@@ -3,7 +3,7 @@ require './lib/pawn.rb'
 #DIRECTION IS KEY FOR PAWN
 #OR DERIVE DIRECTION FROM HOME
 RSpec.describe Pawn do
-  subject(:pawn){ Pawn.new(:b,2,:black,Board.new(8)) }
+  subject(:pawn){ Pawn.new(:b,2,:black,Board.new) }
   describe "#legal_move?" do
     it "returns true if legal move (move one)" do
       expect(subject.legal_move?(:b,3)).to be true
@@ -17,7 +17,7 @@ RSpec.describe Pawn do
     it "returns false if not permitted move(x)" do
       expect(subject.legal_move?(:h,2)).to be false
     end
-    subject(:pawn){ Pawn.new(:b,4,:black,Board.new(8)) }
+    subject(:pawn){ Pawn.new(:b,4,:black,Board.new) }
     let(:piece_a){Piece.new(:a,5,:white,subject.board)}
     let(:piece_b){Piece.new(:b,)}
     #check inheriting from piece
@@ -26,7 +26,7 @@ RSpec.describe Pawn do
     include_examples "allowed move"
   end
 
-  subject(:pawn){ Pawn.new(:b,2,:black,Board.new(8)) }
+  subject(:pawn){ Pawn.new(:b,2,:black,Board.new) }
   include_examples "set colour"
   include_examples "#new"
 

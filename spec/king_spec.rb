@@ -1,7 +1,7 @@
 require './lib/king.rb'
 
 RSpec.describe King do
-  subject(:king){ Knight.new(:b,2,:black,Board.new(8)) }
+  subject(:king){ Knight.new(:b,2,:black,Board.new )}
   describe "#legal_move?" do
     it "returns true if legal move" do
       expect(subject.legal_move?(:c,2)).to be true
@@ -18,7 +18,7 @@ RSpec.describe King do
     include_examples "allowed move"
   end
 
-  subject(:king){ King.new(:b,2,:black,Board.new(8)) }
+  subject(:king){ King.new(:b,2,:black,Board.new) }
   include_examples "set colour"
   include_examples "#new"
 end
