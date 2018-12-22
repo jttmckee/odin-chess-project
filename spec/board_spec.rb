@@ -1,3 +1,5 @@
+#TODO:
+#DRY up range by using default values
 require './lib/board.rb'
 RSpec.describe "Board" do
   subject(:board) {Board.new(8)}
@@ -72,6 +74,25 @@ RSpec.describe "Board" do
       board.move(piece,:c,5)
       expect(board.taken).to include old_piece
     end
+  end
+
+  describe "#home" do
+    let(:white_piece) {Piece.new(:a,4,:white,subject)}
+    let(:black_piece) {Piece.new(:b,6,:black,subject)}
+    let(:not_used) {board.set_home(white_piece,1)}
+    context "correctly returns the home row" do
+      it "for a white piece" do
+        expect(subject.home(white_piece)).to eql(1)
+      end
+      it "for a black piece" do
+        expect(subject.home(black_piece)).to eql(8)
+      end
+    end
+    it "returns a changed home row" do
+      board.set_home(white_piece,8)
+      expect(subject.home(black_piece)).to eql(1)
+    end
+
   end
 
 end

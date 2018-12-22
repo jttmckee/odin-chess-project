@@ -39,6 +39,14 @@ class Board
 
   end
 
+  def home(piece)
+
+  end
+
+  def set_home(piece,row)
+
+  end
+
 #Class helpers
   def self.sym_to_i(x)
     x.to_s.ord - 96

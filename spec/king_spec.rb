@@ -9,7 +9,7 @@ RSpec.describe King do
     it "returns false if not permitted King move(y)" do
       expect(subject.legal_move?(:b,6)).to be false
     end
-    it "returns false if not permitted Knight move(x)" do
+    it "returns false if not permitted King move(x)" do
       expect(subject.legal_move?(:h,2)).to be false
     end
     #check inheriting from piece
