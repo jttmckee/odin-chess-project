@@ -4,6 +4,7 @@ class Board
     @range = range
     @grid = Hash.new
     @taken = Set.new
+    @home = {white: 1,black: 8}
   end
 
   def new_piece(piece)
@@ -40,11 +41,12 @@ class Board
   end
 
   def home(piece)
-
+    @home[piece.colour]
   end
 
   def set_home(piece,row)
-
+    @home[piece.colour] = row
+    @home[piece.colour == :white ? :black : :white] = @range + 1 - row
   end
 
 #Class helpers
