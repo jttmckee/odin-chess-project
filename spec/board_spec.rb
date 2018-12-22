@@ -1,5 +1,4 @@
-#TODO:
-#DRY up range by using default values
+
 require './lib/board.rb'
 RSpec.describe "Board" do
   subject(:board) {Board.new}
