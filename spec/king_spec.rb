@@ -17,8 +17,19 @@ RSpec.describe King do
     let(:new_piece) {new_piece = Piece.new(:b,3,:black,subject.board) }
     include_examples "allowed move"
 
-    let(:pawn) {new_pawn = Pawn.new(:b,4,:white,subject.board)}
-    let(:knight) {new_knight = Knight.new(:a,4)}
+    let(:pawn) {new_pawn = Pawn.new(:b,5,:white,subject.board)}
+    let(:knight) {new_knight = Knight.new(:b,4,:white,subject.board)}
+
+    it "returns false if moving into Check" do
+      subject.board.new_piece pawn;subject.board.new_piece knight;
+      expect(subject.legal_move?(:c,2)).to be false
+    end
+
+    it "returns true if legal move not moving into Check" do
+      subject.board.new_piece pawn;subject.board.new_piece knight;
+      expect(subject.legal_move?(:c,3)).to be true
+    end
+
 
   end
 

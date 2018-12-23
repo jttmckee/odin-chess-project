@@ -94,4 +94,19 @@ RSpec.describe "Board" do
 
   end
 
+  describe "#pieces" do
+    let(:piece1) {Piece.new(:a,2,:black,Board.new)}
+    let(:piece2) {Piece.new(:b,3,:white,Board.new)}
+    it "returns all the pieces on the board without block" do
+      subject.new_piece piece1;subject.new_piece piece2;
+      expect(subject.pieces).to eq [piece1,piece2]
+    end
+
+    it "returns all the pieces meeting the block condition" do
+      subject.new_piece piece1;subject.new_piece piece2;
+      expect(subject.pieces{|piece| piece.colour == :white}).to eq [piece2]
+    end
+
+  end
+
 end

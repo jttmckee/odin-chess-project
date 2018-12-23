@@ -51,6 +51,14 @@ class Board
     @home[piece.colour == :white ? :black : :white] = @range + 1 - row
   end
 
+  def pieces
+    unless block_given?
+      @grid.values
+    else
+      @grid.values.select {|piece| yield(piece) }
+    end
+  end
+
 #Class helpers
   def self.sym_to_i(x)
     x.to_s.ord - 96
