@@ -1,3 +1,5 @@
+require 'set.rb'
+
 class Board
   attr_reader :range, :taken
   def initialize(range=8)

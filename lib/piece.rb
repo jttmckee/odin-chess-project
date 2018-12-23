@@ -27,6 +27,10 @@ class Piece
     (@board[new_x,new_y]&.colour != self.colour)
   end
 
+  def home
+    @board.home(self)
+  end
+
 protected
   def diff(new_x,new_y)
     diff_x = (Board.sym_to_i(new_x) - Board.sym_to_i(@x)).abs

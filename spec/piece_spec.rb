@@ -9,4 +9,10 @@ RSpec.describe Piece, shared: true do
   include_examples "set colour"
   include_examples "#new"
 
+  describe "home" do
+    it "returns the home row of the piece" do
+      expect(subject.home).to eq 1
+    end
+  end
+
 end
