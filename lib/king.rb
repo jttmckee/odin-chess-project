@@ -1,4 +1,4 @@
-require 'Piece.rb'
+require 'piece.rb'
 class King < Piece
 
   def legal_move?(new_x,new_y)

@@ -35,6 +35,7 @@ class Piece
     else
       in_path = false
     end
+    #end diagonal moves
     @board.in_range?(new_x,new_y) &&
     (@board[new_x,new_y]&.colour != self.colour) &&
     (! in_path)
