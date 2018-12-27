@@ -19,9 +19,28 @@ RSpec.shared_examples "allowed move" do
       expect(subject.legal_move?(new_piece.x,new_piece.y)).to be false
     end
   end
-
-
 end
+
+  RSpec.shared_examples "diagonal moves" do
+    let(:piece) {subject.class.new(:b,3,:white,subject.board)}
+    it "can move diagonally when it's clear" do
+      expect(piece.legal_move?(:e,6)).to be true
+    end
+    let(:piece2) {piece.class.new(:c,4,:black,subject.board)}
+
+    it "can't move diagonally when there is a piece on the path" do
+      piece2
+      expect(piece.legal_move?(:e,6)).to be false
+    end
+    let(:piece3) { piece.class.new(:c,2,:black,subject.board)}
+
+    it "can move diagonally to take" do
+      piece3
+      expect(piece.legal_move?(:c,2)).to be true
+    end
+  end
+
+
 
 RSpec.shared_examples "set colour" do
   context "allows colour to be set to" do

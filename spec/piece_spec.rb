@@ -4,6 +4,7 @@ RSpec.describe Piece, shared: true do
   describe "#legal_move?" do
     let(:new_piece) {new_piece = Piece.new(:b,3,:white,subject.board) }
     include_examples "allowed move"
+    include_examples "diagonal moves"
   end
 
   include_examples "set colour"
