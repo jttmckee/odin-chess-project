@@ -23,9 +23,9 @@ class Piece
   end
 
   def legal_move?(new_x,new_y)
-    #diagonal moves - check the path is clear
-    start_x = Board.sym_to_i(@x)
     diff_x,diff_y = diff(new_x,new_y)
+    start_x = Board.sym_to_i(@x)
+    #diagonal moves - check the path is clear
     if diff_x == diff_y && diff_y >= 2
       in_path = (@x...new_x).to_a.any? do |temp_x|
         ctr = (Board.sym_to_i(temp_x) - Board.sym_to_i(@x)).abs
@@ -36,7 +36,15 @@ class Piece
       in_path = false
     end
     #end diagonal moves
+    #linear moves - check the path is clear
+    if diff_x == 0 && diff_y != 0 then in_linear_path = (linear_path?(new_y))
+    elsif diff_y == 0 && diff_x != 0 then in_linear_path = (linear_path?(new_x))
+    else in_linear_path = false
+    end
+    #end linear moves
+    in_path = in_path || in_linear_path
     @board.in_range?(new_x,new_y) &&
+    (diff_y != 0 || diff_x != 0) &&
     (@board[new_x,new_y]&.colour != self.colour) &&
     (! in_path)
 
@@ -51,6 +59,22 @@ protected
     diff_x = (Board.sym_to_i(new_x) - Board.sym_to_i(@x)).abs
     diff_y = (new_y - @y).abs
     return diff_x, diff_y
+  end
+
+private
+  def linear_path?(new_pos)
+    if new_pos.class == Symbol
+      return (@x...new_pos).to_a.any? do |temp_x|
+         temp_x != @x && @board[temp_x, @y] != nil
+      end
+    elsif new_pos.class == Integer
+      return (@y...new_pos).to_a.any? do |temp_y|
+         temp_y != @y && @board[@x,temp_y] != nil
+      end
+    else
+      raise "Error linear_path? Expecting Integer or Symbol"
+    end
+
   end
 
 end

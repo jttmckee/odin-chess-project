@@ -40,6 +40,28 @@ end
     end
   end
 
+  RSpec.shared_examples "linear moves" do
+    let(:piece4) {
+      board = Board.new
+      subject.class.new(:b,3,:white,board)}
+    it "can move up when it's clear" do
+      expect(piece4.legal_move?(:e,3)).to be true
+    end
+    it "can move across when it's clear" do
+      expect(piece4.legal_move?(:b,6)).to be true
+    end
+    let(:piece5) {piece4.class.new(:b,4,:black,piece4.board)}
+    it "can't move across when there is a piece on the path" do
+      piece5
+      expect(piece4.legal_move?(:b,5)).to be false
+    end
+    let(:piece6) { piece4.class.new(:d,3,:black,piece4.board)}
+
+    it "can move up to take" do
+      piece6
+      expect(piece4.legal_move?(:d,3)).to be true
+    end
+  end
 
 
 RSpec.shared_examples "set colour" do
