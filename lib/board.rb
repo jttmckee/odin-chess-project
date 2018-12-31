@@ -40,6 +40,7 @@ class Board
     @grid[[new_x,new_y]] = piece
     piece.x = new_x;piece.y = new_y
 
+
   end
 
   def home(piece)

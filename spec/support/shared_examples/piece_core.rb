@@ -63,6 +63,16 @@ end
     end
   end
 
+  # RSpec.shared_examples "moved" do
+  #   describe "#moved?" do
+  #     let(:new_piece) {subject.class.new(:h,8,)}
+  #     it "when not moved" do
+  #
+  #
+  #     end
+  #
+  #   end
+  # end
 
 RSpec.shared_examples "set colour" do
   context "allows colour to be set to" do
