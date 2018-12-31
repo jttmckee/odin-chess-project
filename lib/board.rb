@@ -39,8 +39,14 @@ class Board
     @taken.add(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
     @grid[[new_x,new_y]] = piece
     piece.x = new_x;piece.y = new_y
+    piece.moved = true
+  end
 
-
+  def range_x
+    return (96+@range).chr.to_sym
+  end
+  def range_y
+    return @range
   end
 
   def home(piece)

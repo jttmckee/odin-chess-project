@@ -23,5 +23,7 @@ RSpec.describe Bishop do
   subject(:bishop){ Bishop.new(:b,2,:black,Board.new) }
   include_examples "set colour"
   include_examples "#new"
+  include_examples "moved"
+
 
 end

@@ -4,6 +4,7 @@ require './lib/board.rb'
 class Piece
   attr_reader :board, :colour
   attr_accessor :x, :y
+  attr_accessor :moved
   def initialize(x,y,colour,board)
     unless board[x,y] == nil
        raise "Error - there is already a piece at location #{x},#{y}"
@@ -12,6 +13,7 @@ class Piece
     @board=board
     self.colour = colour
     @board.new_piece  self
+    @moved = false
   end
 
   def colour=(colour)
@@ -48,6 +50,16 @@ class Piece
     (@board[new_x,new_y]&.colour != self.colour) &&
     (! in_path)
 
+  end
+
+  def legal_moves
+    moves = []
+    (:a..@board.range_x).each do |x|
+      (1..@board.range).each do |y|
+        moves << [x,y] if legal_move?(x,y)
+      end
+    end
+    moves
   end
 
   def home

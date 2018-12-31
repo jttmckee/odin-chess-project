@@ -109,4 +109,14 @@ RSpec.describe "Board" do
 
   end
 
+  describe "#{}range_x" do
+    it "for default boards returns" do
+      expect(subject.range_x).to eql(:h)
+    end
+    it "returns the maxium symbol range" do
+      board = Board.new(9)
+      expect(board.range_x).to eql(:i)
+    end
+  end
+
 end

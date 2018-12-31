@@ -21,5 +21,7 @@ RSpec.describe Knight do
   include_examples "set colour"
 
   include_examples "#new"
+  include_examples "moved"
+
 
 end

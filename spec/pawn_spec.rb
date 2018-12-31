@@ -39,5 +39,4 @@ RSpec.describe Pawn do
   include_examples "set colour"
   include_examples "#new"
 
-
 end

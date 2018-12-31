@@ -63,17 +63,30 @@ end
     end
   end
 
-  # RSpec.shared_examples "moved" do
-  #   describe "#moved?" do
-  #     let(:new_piece) {subject.class.new(:h,8,)}
-  #     it "when not moved" do
-  #
-  #
-  #     end
-  #
-  #   end
-  # end
+  RSpec.shared_examples "moved" do
+    describe "#moved?" do
+      let(:new_piece) {subject.class.new(:h,8,:white,Board.new)}
+      it "when not moved" do
+        expect(new_piece.moved).to be false
+      end
+      it "when moved" do
+        new_piece.board.move(new_piece,
+          new_piece.legal_moves[0][0],new_piece.legal_moves[0][1])
+        expect(new_piece.moved).to be true
+      end
+    end
+  end
 
+RSpec.shared_examples "legal moves" do
+    let(:a_piece) {subject.class.new(start[0],start[1],:white,Board.new)}
+    it "returns a list of all the legal moves" do
+      expect(some_legal_moves & a_piece.legal_moves).to eq some_legal_moves
+      #expect(a_piece.legal_moves).to eq(some_legal_moves)
+    end
+    it "doesn't include illegal moves" do
+      expect(some_illegal_moves & a_piece.legal_moves).to eq []
+    end
+end
 RSpec.shared_examples "set colour" do
   context "allows colour to be set to" do
     it "white" do

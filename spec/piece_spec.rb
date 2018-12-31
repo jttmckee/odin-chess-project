@@ -10,6 +10,15 @@ RSpec.describe Piece, shared: true do
 
   include_examples "set colour"
   include_examples "#new"
+  include_examples "moved"
+
+  describe "#legal_moves?" do
+    let(:start) {[:a,1]}
+    let(:some_legal_moves) {[[:a,3],[:b,2]]}
+    let(:some_illegal_moves) {[:i,9]}
+    include_examples "legal moves"
+
+  end
 
   describe "home" do
     it "returns the home row of the piece" do
