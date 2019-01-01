@@ -36,10 +36,23 @@ class Board
     unless piece.legal_move? new_x, new_y
       raise "Illegal move"
     end
-    @taken.add(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
-    @grid[[new_x,new_y]] = piece
-    piece.x = new_x;piece.y = new_y
-    piece.moved = true
+    diff_x, diff_y = piece.diff(new_x,new_y)
+    if piece.class == King && diff_x == 2 then
+      rook_x = new_x < piece.x ? :a : range_x
+      rook_diff = new_x < piece.x ? +1 : -1
+      rook_new_x = (new_x.to_s.ord + rook_diff).chr.to_sym
+      rook = @grid[[rook_x,piece.y]]
+      @grid.delete([rook.x,rook.y])
+      @grid[[rook_new_x,rook.y]] = rook
+      rook.x = rook_new_x
+      rook.moved = true
+    end
+      @taken.add(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
+      @grid.delete([piece.x,piece.y])
+      @grid[[new_x,new_y]] = piece
+      piece.x = new_x;piece.y = new_y
+      piece.moved = true
+
   end
 
   def range_x

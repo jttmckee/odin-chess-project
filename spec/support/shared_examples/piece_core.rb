@@ -64,6 +64,15 @@ end
   end
 
   RSpec.shared_examples "moved" do
+    describe "move" do
+      let(:piece_to_move) {subject.class.new(:a,2,:white,Board.new)}
+      it "moves the piece" do
+        move = piece_to_move.legal_moves[0]
+        piece_to_move.move(move[0],move[1])
+        expect(piece_to_move.x).to eq move[0]
+        expect(piece_to_move.y).to eq move[1]
+      end
+    end
     describe "#moved?" do
       let(:new_piece) {subject.class.new(:h,8,:white,Board.new)}
       it "when not moved" do
@@ -111,6 +120,17 @@ RSpec.shared_examples "#new" do
     it "there is already a piece at location" do
       expect {subject.class.new(subject.x,subject.y,:white,subject.board)}.
       to raise_error "Error - there is already a piece at location #{subject.x},#{subject.y}"
+    end
+  end
+end
+
+RSpec.shared_examples "display" do
+  describe "#display" do
+    it "displays itself as a black character" do
+      expect(subject.class.new(:a,1,:black,Board.new).display).to eq black
+    end
+    it "displays itself as a white character" do
+      expect(subject.class.new(:a,1,:white,Board.new).display).to eq white
     end
   end
 end

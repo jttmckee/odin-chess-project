@@ -30,6 +30,83 @@ RSpec.describe King do
       expect(subject.legal_move?(:c,3)).to be true
     end
 
+    #Castling
+    let(:new_king) {King.new(:e,1,:white,Board.new)}
+    let(:rook1) {Rook.new(:a,1,:white,new_king.board)}
+    let(:rook2) {Rook.new(:h,1,:white,new_king.board)}
+
+
+    it "returns true for a legal long castling move" do
+      rook1
+      expect(new_king.legal_move?(:c,1)).to be true
+    end
+    it "returns true for a legal short castling move" do
+      rook2
+      expect(new_king.legal_move?(:g,1)).to be true
+    end
+    it "returns true even if the rook passes through an attacked square" do
+      rook3 = Rook.new(:b,6,:black,new_king.board)
+      rook1
+      expect(new_king.legal_move?(:c,1)).to be true
+    end
+    it "returns false for an illegal castle (x)" do
+      rook1
+      expect(new_king.legal_move?(:b,1)).to be false
+    end
+    it "returns false for an illegal castle (y)" do
+      rook2
+      expect(new_king.legal_move?(:g,2)).to be false
+    end
+    it "returns false if there is a same colour piece in the way" do
+      rook1
+      rook3 = Rook.new(:d,1,:white,new_king.board)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if there is a different colour piece in the way" do
+      rook1
+      rook3 = Rook.new(:d,1,:black,new_king.board)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if there is a diff colour piece in the way of rook" do
+      rook1
+      rook3 = Rook.new(:b,1,:black,new_king.board)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if the King passes through check" do
+      rook1
+      rook3 = Rook.new(:d,6,:black,new_king.board)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if the King is in check" do
+      rook1
+      rook3 = Rook.new(:e,6,:black,new_king.board)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if rook has been moved" do
+      rook1.move(:b,1);rook1.move(:a,1)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if there is no rook without erroring" do
+      rook1.move(:b,1)
+      expect(new_king.legal_move?(:c,1)).to be false
+    end
+    it "returns false if the King has been moved" do
+      rook2
+      new_king.move(:e,2);new_king.move(:e,1)
+      expect(new_king.legal_move?(:g,1)).to be false
+    end
+    it "actually moves the King and Rook (long)" do
+      rook1
+      new_king.move(:c,1)
+      expect(new_king.x).to eq :c
+      expect(rook1.x).to eq :d
+    end
+    it "actually moves the King and Rook (short)" do
+      rook2
+      new_king.move(:g,1)
+      expect(new_king.x).to eq :g
+      expect(rook2.x).to eq :f
+    end
 
   end
 

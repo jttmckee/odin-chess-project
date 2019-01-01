@@ -18,7 +18,16 @@ RSpec.describe Piece, shared: true do
     let(:some_illegal_moves) {[:i,9]}
     include_examples "legal moves"
 
+    it "can move back to original position" do
+      subject.move(:c,3)
+      expect(subject.legal_move?(:b,2)).to be true
+    end
+
   end
+
+
+
+
 
   describe "home" do
     it "returns the home row of the piece" do

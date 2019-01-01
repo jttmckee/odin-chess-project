@@ -16,6 +16,8 @@ class Piece
     @moved = false
   end
 
+
+
   def colour=(colour)
     if [:white,:black].include? colour
       @colour = colour
@@ -62,16 +64,30 @@ class Piece
     moves
   end
 
+  def move(x,y)
+    @board.move(self,x,y)
+  end
+
   def home
     @board.home(self)
   end
 
-protected
   def diff(new_x,new_y)
     diff_x = (Board.sym_to_i(new_x) - Board.sym_to_i(@x)).abs
     diff_y = (new_y - @y).abs
     return diff_x, diff_y
   end
+
+  def display
+    colour ==
+    :white ? base_display : (base_display.ord + 6).chr(Encoding::UTF_8)
+  end
+
+protected
+def base_display
+  "ERROR STUB METHOD OF PARENT CLASS"
+end
+
 
 private
   def linear_path?(new_pos)

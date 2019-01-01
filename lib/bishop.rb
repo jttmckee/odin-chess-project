@@ -6,4 +6,8 @@ class Bishop < Piece
     diff_x,diff_y = diff(new_x,new_y)
     super && diff_x == diff_y
   end
+
+  def base_display
+    "\u2657"
+  end
 end
