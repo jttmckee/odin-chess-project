@@ -14,4 +14,9 @@ class Pawn < Piece
 
   end
 
+  protected
+    def base_display
+      "\u2659"
+    end
+
 end

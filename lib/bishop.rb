@@ -6,7 +6,7 @@ class Bishop < Piece
     diff_x,diff_y = diff(new_x,new_y)
     super && diff_x == diff_y
   end
-
+protected
   def base_display
     "\u2657"
   end

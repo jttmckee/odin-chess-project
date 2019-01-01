@@ -38,5 +38,6 @@ RSpec.describe Pawn do
 
   include_examples "set colour"
   include_examples "#new"
-
+  let(:white) {'♙'} ; let(:black) {'♟'}
+  include_examples "display"
 end

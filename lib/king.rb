@@ -26,6 +26,10 @@ class King < Piece
     end
 
   end
+protected
+  def base_display
+    "\u2654"
+  end
 
 private
   def checked? (x,y)

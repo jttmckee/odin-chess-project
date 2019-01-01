@@ -114,5 +114,7 @@ RSpec.describe King do
   include_examples "set colour"
   include_examples "#new"
   include_examples "moved"
+  let(:white) {'♔'} ; let(:black) {'♚'}
+  include_examples "display"
 
 end

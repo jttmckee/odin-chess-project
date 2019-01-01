@@ -6,5 +6,8 @@ class Queen < Piece
     ((@x == new_x) ^ (@y == new_y))) &&
      super
   end
-
+  protected
+    def base_display
+      "\u2655"
+    end
 end

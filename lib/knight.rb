@@ -6,5 +6,8 @@ class Knight < Piece
     legal = (diff_x == 1 && diff_y == 2) ||  (diff_x == 2 && diff_y == 1)
     return legal && super(new_x,new_y)
   end
-
+  protected
+    def base_display
+      "\u2658"
+    end
 end
