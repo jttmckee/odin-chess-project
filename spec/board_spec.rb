@@ -109,13 +109,106 @@ RSpec.describe "Board" do
 
   end
 
-  describe "#{}range_x" do
+  describe "#range_x" do
     it "for default boards returns" do
       expect(subject.range_x).to eql(:h)
     end
     it "returns the maxium symbol range" do
       board = Board.new(9)
       expect(board.range_x).to eql(:i)
+    end
+  end
+
+  describe "#display" do
+    it "displays an empty board" do
+      expect{Board.new.display}.to output(<<-BOARD).to_stdout
+    a   b   c   d   e   f   g   h
+  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓
+ 8┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃8
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 7┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃7
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 6┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃6
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 5┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃5
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 4┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃4
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 3┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃3
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 2┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃2
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 1┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃1
+  ┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛
+    a   b   c   d   e   f   g   h
+      BOARD
+    end
+
+    it "displays a board with pieces" do
+        expect{
+      board = Board.new
+      king1 = King.new(:d,7,:white,board)
+      king2 = King.new(:f,3,:black,board)
+      queen = Queen.new(:h,5,:white,board)
+      rook = Rook.new(:a,1,:black,board)
+      bishop = Bishop.new(:c,8,:white,board)
+      knight = Knight.new(:f,8,:black,board)
+      pawn = Pawn.new(:h,3,:white,board)
+      board.display}.to output(<<-BOARD).to_stdout
+    a   b   c   d   e   f   g   h
+  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓
+ 8┃   ┃▌ ▐┃ ♗ ┃▌ ▐┃   ┃▌♞▐┃   ┃▌ ▐┃8
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 7┃▌ ▐┃   ┃▌ ▐┃ ♔ ┃▌ ▐┃   ┃▌ ▐┃   ┃7
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 6┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃6
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 5┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃ ♕ ┃5
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 4┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃4
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 3┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃ ♚ ┃▌ ▐┃ ♙ ┃3
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 2┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃2
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 1┃▌♜▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃1
+  ┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛
+    a   b   c   d   e   f   g   h
+      BOARD
+    end
+    it "displays a board with pieces after moves" do
+        expect{
+      board = Board.new
+      king1 = King.new(:c,7,:white,board)
+      king2 = King.new(:f,3,:black,board)
+      queen = Queen.new(:h,5,:white,board)
+      rook = Rook.new(:a,1,:black,board)
+      bishop = Bishop.new(:c,8,:white,board)
+      knight = Knight.new(:e,6,:black,board)
+      pawn = Pawn.new(:h,3,:white,board)
+      king1.move(:d,7)
+      knight.move(:f,8)
+      board.display}.to output(<<-BOARD).to_stdout
+    a   b   c   d   e   f   g   h
+  ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓
+ 8┃   ┃▌ ▐┃ ♗ ┃▌ ▐┃   ┃▌♞▐┃   ┃▌ ▐┃8
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 7┃▌ ▐┃   ┃▌ ▐┃ ♔ ┃▌ ▐┃   ┃▌ ▐┃   ┃7
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 6┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃6
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 5┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃ ♕ ┃5
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 4┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃4
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 3┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃ ♚ ┃▌ ▐┃ ♙ ┃3
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 2┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃2
+  ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
+ 1┃▌♜▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃1
+  ┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛
+    a   b   c   d   e   f   g   h
+      BOARD
     end
   end
 

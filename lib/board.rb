@@ -1,4 +1,5 @@
 require 'set.rb'
+require './lib/piece.rb'
 
 class Board
   attr_reader :range, :taken
@@ -79,9 +80,32 @@ class Board
     end
   end
 
+  def display
+     puts "    a   b   c   d   e   f   g   h"
+     print"  ┏"; (@range-1).times {print "━━━┳"};print "━━━┓\n";
+     @range.times do |row|
+       y = @range - row
+       print " #{y}┃"
+       (@range).times do |col|
+         x = Board.i_to_sym(col+1)
+         pe = @grid[[x,y]] ? @grid[[x,y]].display : " "
+         print ((row + col).even? ? " #{pe} " : "▌#{pe}▐") + "┃"
+       end
+       print "#{y}\n"
+       if row != @range-1 then
+         print"  ┣"; (@range-1).times {print "━━━╋"};print "━━━┫\n";
+       else
+         print"  ┗"; (@range-1).times {print "━━━┻"};print "━━━┛\n";
+       end
+     end
+     puts "    a   b   c   d   e   f   g   h"
+  end
+
 #Class helpers
   def self.sym_to_i(x)
     x.to_s.ord - 96
   end
-
+  def self.i_to_sym(x)
+    (x+96).chr(Encoding::UTF_8).to_sym
+  end
 end

@@ -1,3 +1,4 @@
+require './lib/piece.rb'
 class Queen < Piece
 
   def legal_move?(new_x, new_y)
