@@ -34,6 +34,7 @@ protected
 private
   def checked? (x,y)
     @board.pieces do |piece|
+      piece != nil &&
       piece != self && piece.colour != self.colour && piece.legal_move?(x,y)
     end.size > 0
   end

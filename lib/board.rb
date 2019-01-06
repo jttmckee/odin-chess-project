@@ -28,6 +28,11 @@ class Board
     end
   end
 
+  def delete_piece (piece)
+    @grid[[piece.x,piece.y]] = nil
+    piece = nil
+  end
+
   def in_range? (x,y)
     x.class == Symbol && (:a..:h).to_a.include?(x) &&
     y.class == Integer && (1..8).to_a.include?(y)

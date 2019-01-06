@@ -28,12 +28,95 @@ RSpec.describe Game do
     end
   end
 
-  describe "#intepret_move" do
-
-    it "correctly moves a pawn" do
-
+  describe "#interpret_move" do
+    subject(:game) {Game.new}
+    let(:game2) do
+      game2 = Game.new
+      (:a..:h).to_a.each do |x|
+        game2.board.delete_piece game2.board[x,2]
+        game2.board.delete_piece game2.board[x,7]
+      end
+      game2
+    end
+    it "correctly moves a pawn using algebraic notation" do
+        pawn = game.board[:h,2]
+        game.interpret_move('h3')
+        expect(game.board[:h,3]).to eq(pawn)
+    end
+    it "changes the turn after playing" do
+        game.interpret_move('h3')
+        expect(game.turn).to eq(:black)
+    end
+    it "correctly rejects unclear move(no pawn available)" do
+        expect{game.interpret_move('h6')}.to output(
+          "Error: Not a legal move.  For Help type 'help'\n").to_stdout
+        expect(game.board[:h,6]).to eq(nil)
+    end
+    it "correctly rejects unclear move(two pieces)" do
+        pawn = game.board[:h,2]
+        game.interpret_move('h4')
+        game.interpret_move('g5')
+        game.interpret_move('f4')
+        game.interpret_move('e5')
+        expect{game.interpret_move('g5')}.to output(
+          <<~MESSAGE
+          Error: More than one piece possible.
+          Please specify using algebraic notation.
+          For Help type 'help'
+          MESSAGE
+        ).to_stdout
     end
 
+    it "correctly rejects false promotion" do
+        expect{game.interpret_move('g3Q')}.to output(
+          "Error: Cannot promote until you reach the end\n"
+        ).to_stdout
+    end
+    it "correctly accepts a genuine promotion" do
+        game2.interpret_move('Nh3')
+        pawn = Pawn.new(:g,2,:black,game2.board)
+        game2.interpret_move('g1Q')
+        expect(game2.board[:g,1].class).to eq(Queen)
+    end
+    it "insists on promotion" do
+        game2.interpret_move('Nh3')
+        pawn = Pawn.new(:g,2,:black,game2.board)
+        expect{game2.interpret_move('g1')}.to output(
+        "Error: You must indicate how you want to promote\n").to_stdout
+
+    end
+    it "correctly inteprets clear move(two pieces)" do
+        pawn = game.board[:h,2]
+        pawn2 = game.board[:f,2]
+        game.interpret_move('h4')
+        game.interpret_move('g5')
+        game.interpret_move('f4')
+        game.interpret_move('e5')
+
+        game.interpret_move('fg5')
+        expect(game.board[:g,5]).to eq(pawn2)
+    end
+    it "correctly inteprets a knight move" do
+        knight = game.board[:g,1]
+        game.interpret_move('Nh3')
+        expect(game.board[:h,3]).to eq(knight)
+    end
+    it "correctly inteprets a black king move" do
+        king = game2.board[:e,8]
+        game2.interpret_move('Ra4')
+        game2.interpret_move('Kf7')
+        expect(game2.board[:f,7]).to eq(king)
+    end
+    it "correctly inteprets a Queen move" do
+        queen = game2.board[:d,1]
+        game2.interpret_move('Qf3')
+        expect(game2.board[:f,3]).to eq(queen)
+    end
+    it "correctly inteprets a Bishop move" do
+        bishop = game2.board[:c,1]
+        game2.interpret_move('Bf4')
+        expect(game2.board[:f,4]).to eq(bishop)
+    end
   end
 
 

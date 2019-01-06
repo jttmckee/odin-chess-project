@@ -1,4 +1,4 @@
-require 'piece.rb'
+require './lib/piece.rb'
 
 class Bishop < Piece
 
