@@ -53,14 +53,15 @@ class Board
       rook.x = rook_new_x
       rook.moved = true
     end
-      @taken.add(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
-      @grid.delete([piece.x,piece.y])
-      @grid[[new_x,new_y]] = piece
-      piece.x = new_x;piece.y = new_y
-      piece.moved = true
-
+    force_move(piece,new_x,new_y)
   end
-
+  def force_move(piece,new_x,new_y)
+    @taken.add(@grid[[new_x,new_y]]) if @grid[[new_x,new_y]] != nil
+    @grid.delete([piece.x,piece.y])
+    @grid[[new_x,new_y]] = piece
+    piece.x = new_x;piece.y = new_y
+    piece.moved = true
+  end
   def range_x
     return (96+@range).chr.to_sym
   end

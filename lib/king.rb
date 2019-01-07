@@ -30,7 +30,6 @@ protected
   def base_display
     "\u2654"
   end
-
 private
   def checked? (x,y)
     @board.pieces do |piece|

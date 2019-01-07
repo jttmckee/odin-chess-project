@@ -88,6 +88,7 @@ class Game
     else
       board.move(pieces[0],x,y)
     end
+    if checkmate? then puts 'CHECKMATE' end
     @turn = @turn == :white ? :black : :white
   end
   private
@@ -121,5 +122,42 @@ class Game
     when 'K' then King
     else nil
     end
+  end
+
+  def checkmate?
+    colour = @turn == :white ? :black : :white
+    kings = @board.pieces {|p| p.class == King && p.colour == colour}
+    return false unless kings.size == 1
+    king = kings[0]
+    return false unless in_check? king
+    checkmate = false
+    pieces = @board.pieces {|p| p&.colour == colour}
+    pieces.each do |piece|
+      moves = piece.legal_moves
+      moves.each do |move|
+        x, y = move[0], move[1]
+        moved, old_x, old_y = piece.moved, piece.x, piece.y
+        old_piece = @board[x,y]
+        @board.force_move(piece,x,y)
+        checked = @board.pieces do |p|
+          p != nil &&
+          p != king &&
+          p.colour != colour && piece.legal_move?(king.x,king.y)
+        end.size > 0
+        @board.force_move(piece,old_x,old_y)
+        @moved = moved
+        @board.new_piece  old_piece if old_piece
+        checkmate = checkmate || checked
+      end
+    end
+  end
+
+  def in_check? (king)
+    @board.pieces do |piece|
+      piece != nil &&
+      piece != king &&
+      piece.colour != king.colour &&
+      piece.legal_move?(king.x,king.y)
+    end.size > 0
   end
 end

@@ -50,7 +50,9 @@ class Piece
     @board.in_range?(new_x,new_y) &&
     (diff_y != 0 || diff_x != 0) &&
     (@board[new_x,new_y]&.colour != self.colour) &&
-    (! in_path)
+    (! in_path) &&
+    (! checked?(new_x,new_y))
+
 
   end
 
@@ -103,6 +105,25 @@ private
       raise "Error linear_path? Expecting Integer or Symbol"
     end
 
+  end
+
+  def checked? (x,y)
+    kings = @board.pieces {|p| p.class == King && p.colour == @colour}
+    return false unless kings.size == 1
+    king = kings[0]
+    moved, old_x, old_y = @moved, @x, @y
+    old_piece = @board[x,y]
+    @board.force_move(self,x,y)
+    checked = @board.pieces do |piece|
+      piece != nil &&
+      piece != self &&
+      piece != king &&
+      piece.colour != self.colour && piece.legal_move?(king.x,king.y)
+    end.size > 0
+    @board.force_move(self,old_x,old_y)
+    @moved = moved
+    @board.new_piece  old_piece if old_piece
+    return checked
   end
 
 end

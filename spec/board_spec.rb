@@ -179,31 +179,33 @@ RSpec.describe "Board" do
     it "displays a board with pieces after moves" do
         expect{
       board = Board.new
-      king1 = King.new(:c,7,:white,board)
-      king2 = King.new(:f,3,:black,board)
+      king1 = King.new(:b,6,:black,board)
+      king2 = King.new(:f,2,:white,board)
       queen = Queen.new(:h,5,:white,board)
       rook = Rook.new(:a,1,:black,board)
       bishop = Bishop.new(:c,8,:white,board)
       knight = Knight.new(:e,6,:black,board)
       pawn = Pawn.new(:h,3,:white,board)
-      king1.move(:d,7)
+      king1.move(:c,6)
       knight.move(:f,8)
-      board.display}.to output(<<-BOARD).to_stdout
+      pawn.move(:h,4)
+      board.display
+      }.to output(<<-BOARD).to_stdout
     a   b   c   d   e   f   g   h
   ┏━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┳━━━┓
  8┃   ┃▌ ▐┃ ♗ ┃▌ ▐┃   ┃▌♞▐┃   ┃▌ ▐┃8
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
- 7┃▌ ▐┃   ┃▌ ▐┃ ♔ ┃▌ ▐┃   ┃▌ ▐┃   ┃7
+ 7┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃7
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
- 6┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃6
+ 6┃   ┃▌ ▐┃ ♚ ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃6
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
  5┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃ ♕ ┃5
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
- 4┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃4
+ 4┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌♙▐┃4
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
- 3┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃ ♚ ┃▌ ▐┃ ♙ ┃3
+ 3┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃3
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
- 2┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃2
+ 2┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌♔▐┃   ┃▌ ▐┃2
   ┣━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━╋━━━┫
  1┃▌♜▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃▌ ▐┃   ┃1
   ┗━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┻━━━┛

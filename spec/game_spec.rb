@@ -117,6 +117,38 @@ RSpec.describe Game do
         game2.interpret_move('Bf4')
         expect(game2.board[:f,4]).to eq(bishop)
     end
+    it "rejects nonsense moves" do
+      expect{game2.interpret_move('Kd2')}.to output(
+        "Error: Not a legal move.  For Help type 'help'\n"
+      ).to_stdout
+    end
+
+    it "insists on coming out of check" do
+      game2.interpret_move('Qe2')
+      expect{game2.interpret_move('Nh6')}.to output(
+        "Error: Not a legal move.  For Help type 'help'\n"
+      ).to_stdout
+    end
+    it "allows move out of check" do
+      game2.interpret_move('Qe2')
+      game2.interpret_move('Qe7')
+      expect(game2.board[:e,7].class).to eq(Queen)
+    end
+    it "doesn't let a King move into check" do
+      expect{game2.interpret_move('Kd2')}.to output(
+        "Error: Not a legal move.  For Help type 'help'\n"
+      ).to_stdout
+
+    end
+    it "recognizes checkmate" do
+      game.interpret_move('g4')
+      game.interpret_move('e6')
+      game.interpret_move('f3')
+      game.interpret_move('h4')
+      expect{game.interpret_move('Qh4')}.to output(
+        "CHECKMATE\n"
+      ).to_stdout
+    end
   end
 
 
