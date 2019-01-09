@@ -1,0 +1,8 @@
+This is a two player chess game.
+Algebraic notation is used as follows:
+The pieces are described as K for King, Q for Queen, B for Bishop N for Knight and R for Rook.  No letter is used for the pawn
+You decide how to move by identifying the letter of the piece to move (or none of a Pawn) and the rank and file it should move to.
+Eg. 'Nh3' will move the knight to square h, 3.
+In the case that more than one piece of the same type would be used you can describe an from rank or file at the start.eg 'Nab3'.  The rules on using the from rank or file are more relaxed than the standard rules, but you can follow the standard.
+
+The game follows the normal rules of chess, and doesn't allow moves into check.

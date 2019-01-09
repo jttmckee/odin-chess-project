@@ -150,6 +150,42 @@ RSpec.describe Game do
       ).to_stdout
     end
   end
-
+  describe "#help" do
+    it "outputs the contents of the help file" do
+      test_help_file =  open './help/help.txt'
+      help_contents = test_help_file.read
+      test_help_file.close
+      expect{subject.help}.to output(
+        help_contents
+      ).to_stdout
+    end
+  end
+  describe "#save" do
+    it "saves an additional file" do
+      number = Dir.entries("./save/").size
+      subject.save
+      expect(Dir.entries("./save/").size - number).to eq(1)
+    end
+  end
+  describe "#open" do
+    let(:game2) do
+      game2 = Game.new
+      (:a..:h).to_a.each do |x|
+        game2.board.delete_piece game2.board[x,2]
+        game2.board.delete_piece game2.board[x,7]
+      end
+      game2
+    end
+    it "opens a saved file returning game to this state" do
+      game2.save
+      game2.interpret_move('Rh4')
+      most_recent =
+        Dir["./save/*"].sort_by { |file_name| File.stat(file_name).mtime }[-1]
+      saved_game = Game.new.open most_recent
+      expect(saved_game.board[:f,2]).to eq nil
+      expect(saved_game.board[:f,2].class).to eq Rook
+      expect(saved.game.turn).to eq :black
+    end
+  end
 
 end

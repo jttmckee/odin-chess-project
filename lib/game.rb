@@ -91,6 +91,21 @@ class Game
     if checkmate? then puts 'CHECKMATE' end
     @turn = @turn == :white ? :black : :white
   end
+
+  def help
+    help_file = File.open './help/help.txt'
+    help_contents = help_file.read
+    puts help_contents
+  end
+
+  def save
+
+  end
+
+  def open(filename)
+
+  end
+
   private
   def set_up_side(colour,home)
     row2 = home == 1 ? 2 : 7
