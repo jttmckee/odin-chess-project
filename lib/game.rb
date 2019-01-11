@@ -5,6 +5,7 @@ require './lib/queen.rb'
 require './lib/bishop.rb'
 require './lib/rook.rb'
 require './lib/pawn.rb'
+require 'JSON'
 
 class Game
   INPUT_REGEX =
@@ -99,11 +100,50 @@ class Game
   end
 
   def save
-
+    filename = "game_" + Time.now.to_s.gsub(/ \+0000/,'').gsub(/[- :]/,'_')
+    pieces = @board.pieces {|p| p != nil}
+    saved_pieces = Hash.new
+    pieces.each do |piece|
+      saved_pieces["#{piece.x.to_s}#{piece.y.to_s}"] =
+        JSON.dump({
+          class: piece.class,
+          colour: piece.colour,
+          moved: piece.moved
+          })
+    end
+    file = File.open("./save/#{filename}", 'w')
+    file.write JSON.dump({
+      pieces: saved_pieces,
+      turn: @turn
+      })
+    file.close
   end
 
   def open(filename)
-
+    unless File.exist? filename
+      puts "No such file"
+      return false
+    end
+    f = File.open filename, 'r'
+    contents = JSON.load f.read
+    if contents["turn"] == nil || contents["pieces"] == nil
+      puts "Invalid file"
+      return false
+    end
+    @board = Board.new
+    @turn = contents["turn"].to_sym
+    contents["pieces"].each do |xy,p_string|
+      p = JSON.load p_string
+      p_class = Kernel.const_get (p["class"])
+      piece = p_class.new(xy[0].to_sym,xy[1].to_i,p["colour"].to_sym,@board)
+      @board.new_piece piece
+      piece.moved = p["moved"]
+      unless @board[xy[0].to_sym,xy[1].to_i] == piece
+        puts "File corrupted"
+        return false
+      end
+    end
+    return true
   end
 
   private

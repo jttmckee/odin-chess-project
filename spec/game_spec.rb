@@ -177,14 +177,18 @@ RSpec.describe Game do
       game2
     end
     it "opens a saved file returning game to this state" do
-      game2.save
       game2.interpret_move('Rh4')
+      game2.save
+      game2.interpret_move('Rh5')
       most_recent =
         Dir["./save/*"].sort_by { |file_name| File.stat(file_name).mtime }[-1]
-      saved_game = Game.new.open most_recent
-      expect(saved_game.board[:f,2]).to eq nil
-      expect(saved_game.board[:f,2].class).to eq Rook
-      expect(saved.game.turn).to eq :black
+      saved_game = Game.new
+      saved_game.open most_recent
+      expect(saved_game.board[:h,1]).to eq nil
+      expect(saved_game.board[:h,2]).to eq nil
+      expect(saved_game.board[:h,4].class).to eq Rook
+      expect(saved_game.board[:h,5]).to eq nil
+      expect(saved_game.turn).to eq :black
     end
   end
 
