@@ -144,10 +144,21 @@ RSpec.describe Game do
       game.interpret_move('g4')
       game.interpret_move('e6')
       game.interpret_move('f3')
-      game.interpret_move('h4')
+      #game.interpret_move('h4')
       expect{game.interpret_move('Qh4')}.to output(
         "CHECKMATE\n"
       ).to_stdout
+      expect(game.checkmate).to be true
+
+    end
+    it "doesn't falsely claim checkmate" do
+      game.interpret_move('g4')
+      game.interpret_move('e6')
+      game.interpret_move('f3')
+      game.interpret_move('a6')
+      game.interpret_move('e3')
+      game.interpret_move('Qh4')
+      expect(game.checkmate).to be false
     end
   end
   describe "#help" do

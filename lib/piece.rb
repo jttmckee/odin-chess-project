@@ -31,10 +31,17 @@ class Piece
     start_x = Board.sym_to_i(@x)
     #diagonal moves - check the path is clear
     if diff_x == diff_y && diff_y >= 2
-      in_path = (@x...new_x).to_a.any? do |temp_x|
+      x_line = @x < new_x ? (@x..new_x) : (new_x..@x)
+      y_line = @y < new_y ? (@y..new_y) : (new_y..@y)
+      if (@y > new_y)
+        y_array = y_line.to_a.reverse
+      else
+        y_array = y_line.to_a
+      end
+      in_path = x_line.to_a.any? do |temp_x|
         ctr = (Board.sym_to_i(temp_x) - Board.sym_to_i(@x)).abs
-        temp_y = (@y...new_y).to_a[ctr]
-        temp_x != @x && @board[temp_x,temp_y] != nil
+        temp_y = y_array[ctr]
+        temp_x != @x && temp_x != new_x && @board[temp_x,temp_y] != nil
       end
     else
       in_path = false
@@ -94,12 +101,14 @@ end
 private
   def linear_path?(new_pos)
     if new_pos.class == Symbol
-      return (@x...new_pos).to_a.any? do |temp_x|
-         temp_x != @x && @board[temp_x, @y] != nil
+      line = @x < new_pos ? (@x...new_pos) : (new_pos...@x)
+      return line.to_a.any? do |temp_x|
+         temp_x != @x && temp_x != new_pos && @board[temp_x, @y] != nil
       end
     elsif new_pos.class == Integer
-      return (@y...new_pos).to_a.any? do |temp_y|
-         temp_y != @y && @board[@x,temp_y] != nil
+      line = @y < new_pos ? (@y...new_pos) : (new_pos...@y)
+      return line.to_a.any? do |temp_y|
+         temp_y != @y && temp_y != new_pos && @board[@x,temp_y] != nil
       end
     else
       raise "Error linear_path? Expecting Integer or Symbol"

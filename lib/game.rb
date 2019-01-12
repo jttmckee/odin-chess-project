@@ -31,10 +31,11 @@ class Game
   ERROR_CANT_PROMOTE = "Error: Cannot promote until you reach the end"
   ERROR_MUST_PROMOTE = "Error: You must indicate how you want to promote"
   ERROR_PROMOTE_PIECE = "Error: Please specify the correct piece to promote"
-  attr_reader :board, :turn
+  attr_reader :board, :turn, :checkmate
   def initialize
     @board = Board.new
     @turn = :white
+    @checkmate = false
     set_up_side(:white,1)
     set_up_side(:black,8)
   end
@@ -89,7 +90,10 @@ class Game
     else
       board.move(pieces[0],x,y)
     end
-    if checkmate? then puts 'CHECKMATE' end
+    if checkmate? then
+      puts 'CHECKMATE'
+      @checkmate = true
+    end
     @turn = @turn == :white ? :black : :white
   end
 
@@ -185,6 +189,7 @@ class Game
     return false unless kings.size == 1
     king = kings[0]
     return false unless in_check? king
+    return false if king.legal_moves.size > 0
     checkmate = false
     pieces = @board.pieces {|p| p&.colour == colour}
     pieces.each do |piece|
@@ -194,11 +199,7 @@ class Game
         moved, old_x, old_y = piece.moved, piece.x, piece.y
         old_piece = @board[x,y]
         @board.force_move(piece,x,y)
-        checked = @board.pieces do |p|
-          p != nil &&
-          p != king &&
-          p.colour != colour && piece.legal_move?(king.x,king.y)
-        end.size > 0
+        checked = in_check? king
         @board.force_move(piece,old_x,old_y)
         @moved = moved
         @board.new_piece  old_piece if old_piece

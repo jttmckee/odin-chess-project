@@ -6,3 +6,9 @@ Eg. 'Nh3' will move the knight to square h, 3.
 In the case that more than one piece of the same type would be used you can describe an from rank or file at the start.eg 'Nab3'.  The rules on using the from rank or file are more relaxed than the standard rules, but you can follow the standard.
 
 The game follows the normal rules of chess, and doesn't allow moves into check.
+
+Other commands:
+To save the game type "save"
+To quit type "quit"
+To open a game type "open"
+For help type "help"
