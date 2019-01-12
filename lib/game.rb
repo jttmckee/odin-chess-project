@@ -188,9 +188,9 @@ class Game
     kings = @board.pieces {|p| p.class == King && p.colour == colour}
     return false unless kings.size == 1
     king = kings[0]
-    return false unless in_check? king
+    #return false unless in_check? king
     return false if king.legal_moves.size > 0
-    checkmate = false
+    checkmate = true
     pieces = @board.pieces {|p| p&.colour == colour}
     pieces.each do |piece|
       moves = piece.legal_moves
@@ -203,9 +203,10 @@ class Game
         @board.force_move(piece,old_x,old_y)
         @moved = moved
         @board.new_piece  old_piece if old_piece
-        checkmate = checkmate || checked
+        checkmate = checkmate && checked
       end
     end
+    checkmate
   end
 
   def in_check? (king)

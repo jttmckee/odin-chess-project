@@ -160,6 +160,12 @@ RSpec.describe Game do
       game.interpret_move('Qh4')
       expect(game.checkmate).to be false
     end
+    it "doesn't falsely claim checkmate(2)" do
+      game.interpret_move('e3')
+      game.interpret_move('f6')
+      game.interpret_move('Qh5')
+      expect(game.checkmate).to be false
+    end
   end
   describe "#help" do
     it "outputs the contents of the help file" do
