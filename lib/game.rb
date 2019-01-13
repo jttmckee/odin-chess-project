@@ -203,6 +203,7 @@ class Game
         @board.force_move(piece,old_x,old_y)
         @moved = moved
         @board.new_piece  old_piece if old_piece
+        return checked if checked == false
         checkmate = checkmate && checked
       end
     end
